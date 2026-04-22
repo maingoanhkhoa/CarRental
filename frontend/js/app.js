@@ -21,7 +21,7 @@ async function initHome() {
         grid.innerHTML = cars.slice(0, 3).map(car => ui.createCarCard(car)).join('');
     } catch (err) {
         console.error(err);
-        grid.innerHTML = '<p class="text-center">Failed to load cars.</p>';
+        grid.innerHTML = '<p class="text-center">Không tìm thấy xe nào.</p>';
     }
 }
 
@@ -141,7 +141,7 @@ async function initDetail() {
                                 <h3>${c.name}</h3>
                                 <div class="similar-footer">
                                     <div class="similar-price">${price}₫<span>/ngày</span></div>
-                                    <a href="detail.html?id=${c.id}" class="btn-view-details">Xem Chi Tiết</a>
+                                    <a href="detail.html?id=${c.id}" class="btn-view-details ">Xem Chi Tiết</a>
                                 </div>
                             </div>
                         </div>`;

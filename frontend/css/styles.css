@@ -1180,7 +1180,7 @@ footer {
   color: var(--text-dark);
 }
 
-.form-control {
+/* .form-control {
   width: 100%;
   padding: 0.875rem 1.25rem;
   border: 1px solid #e5e7eb;
@@ -1189,12 +1189,12 @@ footer {
   font-size: 1rem;
   color: var(--text-dark);
   transition: border-color 0.3s;
-}
+} */
 
-.form-control:focus {
+/* .form-control:focus {
   outline: none;
   border-color: var(--primary-color);
-}
+} */
 
 .form-info-text {
   text-align: center;
@@ -1474,9 +1474,9 @@ footer {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile nav overlay (sidebar từ bên phải) */
+/* Mobile nav overlay */
 .mobile-nav {
-  display: block; /* Hiện block nhưng được đẩy bằng transform */
+  display: block; 
   position: fixed;
   top: 0;
   right: 0;
@@ -1732,6 +1732,7 @@ footer {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1.5px solid #e5e7eb;
+  box-sizing: border-box;
   border-radius: 10px;
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;

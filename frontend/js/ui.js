@@ -44,8 +44,8 @@ window.ui = {
                         <span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.79l.867-1.221m7.264-10.246.867-1.221m-4.5 12.18v-1.49m0-11.48v-1.49m-4.502 12.18-.867-1.221m7.264-10.246-.867-1.221m-6.988 9.642-1.149-.964m11.49-9.642-1.15-.964m-12.685 5.13-1.41-.513m14.095-5.13-1.41-.513" /></svg>${car.transmission}</span>
                     </div>
                     <div class="car-footer">
-                        <div class="price">${formattedPrice}₫<span class="unit">/day</span></div>
-                        <a href="detail.html?id=${car.id}" class="view-details" style="border-radius: 6px; padding: 0.6rem 1rem;">View Details</a>
+                        <div class="price">${formattedPrice}₫<span class="unit">/ngày</span></div>
+                        <a href="detail.html?id=${car.id}" class="view-details" style="border-radius: 6px; padding: 0.6rem 1rem;">Xem Chi Tiết</a>
                     </div>
                 </div>
             </div>
