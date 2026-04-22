@@ -52,7 +52,7 @@ async function initCars() {
             }
 
             if (filteredCars.length === 0) {
-                grid.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">Không tìm thấy xe nào phù hợp với bộ lọc.</p>';
+                grid.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">Không tìm thấy xe nào phù hợp.</p>';
                 return;
             }
             grid.innerHTML = filteredCars.map(car => ui.createCarCard(car)).join('');
@@ -84,24 +84,41 @@ async function initDetail() {
 
     try {
         const car = await api.getCarDetails(carId);
-        document.getElementById('loading').classList.add('d-none');
-        document.getElementById('detail-content').classList.remove('d-none');
+        const loadingEl = document.getElementById('loading');
+        const contentEl = document.getElementById('detail-content');
+        
+        if (loadingEl) loadingEl.classList.add('d-none');
+        if (contentEl) contentEl.classList.remove('d-none');
 
         const imgUrl = car.image_url || 'https://via.placeholder.com/800x500';
 
         document.getElementById('detail-img').src = imgUrl;
         document.getElementById('detail-img').alt = car.name;
         document.getElementById('detail-name').textContent = car.name;
+        document.getElementById('detail-desc').textContent = car.description || 'Không có mô tả cho xe này.';
+
+        // Update page title
+        document.title = `${car.name} - Vũ Đầm Sen`;
 
         const formattedPrice = parseFloat(car.price_per_day) > 1000
             ? parseFloat(car.price_per_day).toLocaleString('vi-VN')
             : car.price_per_day;
-        document.getElementById('detail-price').innerHTML = `${formattedPrice}₫ <span style="font-size: 1rem; color: var(--text-muted); font-weight: normal;">/ngày</span>`;
+        document.getElementById('detail-price').innerHTML = `${formattedPrice}₫ <span>/ngày</span>`;
 
         document.getElementById('detail-seats').textContent = `${car.seats} chỗ`;
         document.getElementById('detail-transmission').textContent = car.transmission;
         document.getElementById('detail-fuel').textContent = car.fuel_type || 'Xăng';
         document.getElementById('detail-type').textContent = `${car.seats} chỗ`;
+
+        // Render thumbnail gallery (use same image for now)
+        const thumbsContainer = document.getElementById('detail-thumbs');
+        if (thumbsContainer && imgUrl) {
+            thumbsContainer.innerHTML = [imgUrl, imgUrl].map((src, i) => `
+                <div class="detail-thumb ${i === 0 ? 'active' : ''}" onclick="document.getElementById('detail-img').src='${src}'; document.querySelectorAll('.detail-thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active');">
+                    <img src="${src}" alt="${car.name} thumbnail ${i + 1}" crossorigin="anonymous">
+                </div>
+            `).join('');
+        }
 
         const bookBtn = document.getElementById('book-btn');
         bookBtn.href = `booking.html?carId=${car.id}&name=${encodeURIComponent(car.name)}`;
@@ -113,28 +130,30 @@ async function initDetail() {
             const similar = allCars.filter(c => c.id != carId).slice(0, 3);
             if (similar.length > 0) {
                 similarGrid.innerHTML = similar.map(c => {
-                    const img = c.image_url
-                        ? (c.image_url.startsWith('http') ? c.image_url : IMAGE_BASE + c.image_url)
-                        : 'https://via.placeholder.com/600x400?text=Car';
+                    const img = c.image_url || 'https://via.placeholder.com/600x400?text=Car';
                     const price = parseFloat(c.price_per_day) > 1000
                         ? parseFloat(c.price_per_day).toLocaleString('vi-VN')
                         : c.price_per_day;
                     return `
-                        <div class="similar-card" style="cursor:pointer;" onclick="location.href='detail.html?id=${c.id}'">
-                            <img src="${img}" alt="${c.name}">
+                        <div class="similar-card">
+                            <img src="${img}" alt="${c.name}" crossorigin="anonymous">
                             <div class="similar-info">
                                 <h3>${c.name}</h3>
-                                <div class="similar-price">${price}₫<span>/ngày</span></div>
+                                <div class="similar-footer">
+                                    <div class="similar-price">${price}₫<span>/ngày</span></div>
+                                    <a href="detail.html?id=${c.id}" class="btn-view-details">Xem Chi Tiết</a>
+                                </div>
                             </div>
                         </div>`;
                 }).join('');
             } else {
-                similarGrid.innerHTML = '<p style="color:var(--text-muted)">Không có xe tương tự.</p>';
+                similarGrid.innerHTML = '<p style="color:var(--text-gray)">Không có xe tương tự.</p>';
             }
         }
     } catch (err) {
         console.error(err);
-        document.getElementById('loading').textContent = 'Không thể tải thông tin xe. Vui lòng thử lại.';
+        const loadingEl = document.getElementById('loading');
+        if (loadingEl) loadingEl.textContent = 'Không thể tải thông tin xe. Vui lòng thử lại.';
     }
 }
 
