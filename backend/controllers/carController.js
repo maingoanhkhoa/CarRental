@@ -8,7 +8,7 @@ exports.getCars = async (req, res) => {
 
         if (req.query.seats) {
             conditions.push(`seats = $${conditions.length + 1}`);
-            values.push(req.query.seats);
+            values.push(parseInt(req.query.seats, 10));
         }
         if (req.query.transmission) {
             conditions.push(`transmission = $${conditions.length + 1}`);

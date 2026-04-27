@@ -20,10 +20,24 @@ router.post('/upload', upload.single('image'), (req, res) => {
   }
 });
 
-// GET all cars
+// GET all cars (supports ?seats=5 or ?seats=7 filter)
 router.get('/', async (req, res) => {
   try {
-    const result = await db.query('SELECT * FROM cars ORDER BY id DESC');
+    let query = 'SELECT * FROM cars';
+    const values = [];
+    const conditions = [];
+
+    if (req.query.seats) {
+      conditions.push(`seats = $${conditions.length + 1}`);
+      values.push(parseInt(req.query.seats, 10));
+    }
+
+    if (conditions.length > 0) {
+      query += ' WHERE ' + conditions.join(' AND ');
+    }
+    query += ' ORDER BY id DESC';
+
+    const result = await db.query(query, values);
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -41,7 +55,16 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ error: 'Car not found' });
     }
 
-    res.json(result.rows[0]);
+    const car = result.rows[0];
+
+    // Fetch additional images from car_images table
+    const imagesResult = await db.query(
+      'SELECT id, image_url, sort_order FROM car_images WHERE car_id = $1 ORDER BY sort_order ASC',
+      [req.params.id]
+    );
+    car.images = imagesResult.rows;
+
+    res.json(car);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

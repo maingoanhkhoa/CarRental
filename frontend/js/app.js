@@ -65,9 +65,9 @@ async function initCars() {
     if (filterForm) {
         filterForm.addEventListener('change', () => {
             const selectedSeat = filterForm.querySelector('input[name="seats"]:checked')?.value || '';
-            const priceRange = document.getElementById('price-dropdown')?.value || '';
+            // const priceRange = document.getElementById('price-dropdown')?.value || ''; //price filter
             
-            loadCars({ seats: selectedSeat, priceRange: priceRange });
+            loadCars({ seats: selectedSeat });
         });
     }
 
@@ -94,7 +94,6 @@ async function initDetail() {
 
         document.getElementById('detail-img').src = imgUrl;
         document.getElementById('detail-img').alt = car.name;
-        document.getElementById('detail-name').textContent = car.name;
         document.getElementById('detail-desc').textContent = car.description || 'Không có mô tả cho xe này.';
 
         // Update page title
@@ -110,18 +109,148 @@ async function initDetail() {
         document.getElementById('detail-fuel').textContent = car.fuel_type || 'Xăng';
         document.getElementById('detail-type').textContent = `${car.seats} chỗ`;
 
-        // Render thumbnail gallery (use same image for now)
-        const thumbsContainer = document.getElementById('detail-thumbs');
-        if (thumbsContainer && imgUrl) {
-            thumbsContainer.innerHTML = [imgUrl, imgUrl].map((src, i) => `
-                <div class="detail-thumb ${i === 0 ? 'active' : ''}" onclick="document.getElementById('detail-img').src='${src}'; document.querySelectorAll('.detail-thumb').forEach(t=>t.classList.remove('active')); this.classList.add('active');">
-                    <img src="${src}" alt="${car.name} thumbnail ${i + 1}" crossorigin="anonymous">
+        // ── Build gallery: main image_url first, then additional images ──
+        const allImages = [imgUrl];
+        if (car.images && car.images.length > 0) {
+            car.images.forEach(img => allImages.push(img.image_url));
+        }
+
+        let currentImageIndex = 0;
+        const totalImages = allImages.length;
+        let thumbPage = 0;
+        const thumbsPerPage = 3;
+        const totalThumbPages = Math.ceil(totalImages / thumbsPerPage);
+
+        // Update gallery counter
+        function updateCounter() {
+            const counter = document.getElementById('gallery-counter');
+            if (counter) counter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+        }
+
+        // Update main image
+        function showImage(index) {
+            currentImageIndex = index;
+            document.getElementById('detail-img').src = allImages[index];
+            updateCounter();
+            // Update thumb active state
+            document.querySelectorAll('.detail-thumb').forEach(t => {
+                const thumbIdx = parseInt(t.dataset.index);
+                t.classList.toggle('active', thumbIdx === index);
+            });
+        }
+
+        // Render visible thumbnails based on page
+        function renderThumbs() {
+            const thumbsContainer = document.getElementById('detail-thumbs');
+            if (!thumbsContainer) return;
+
+            const start = thumbPage * thumbsPerPage;
+            const end = Math.min(start + thumbsPerPage, totalImages);
+            const visibleImages = allImages.slice(start, end);
+
+            thumbsContainer.innerHTML = visibleImages.map((src, i) => {
+                const globalIndex = start + i;
+                return `
+                    <div class="detail-thumb ${globalIndex === currentImageIndex ? 'active' : ''}" data-index="${globalIndex}">
+                        <img src="${src}" alt="thumbnail ${globalIndex + 1}" crossorigin="anonymous">
+                    </div>
+                `;
+            }).join('');
+
+            // Add click handlers
+            thumbsContainer.querySelectorAll('.detail-thumb').forEach(thumb => {
+                thumb.addEventListener('click', () => {
+                    const idx = parseInt(thumb.dataset.index);
+                    showImage(idx);
+                });
+            });
+
+            // Update thumb arrow states
+            const prevThumb = document.getElementById('thumb-prev');
+            const nextThumb = document.getElementById('thumb-next');
+            if (prevThumb) prevThumb.disabled = thumbPage <= 0;
+            if (nextThumb) nextThumb.disabled = thumbPage >= totalThumbPages - 1;
+        }
+
+        // Gallery navigation arrows
+        document.getElementById('gallery-prev').addEventListener('click', () => {
+            const newIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+            showImage(newIndex);
+            // Auto-adjust thumb page to show active thumb
+            thumbPage = Math.floor(newIndex / thumbsPerPage);
+            renderThumbs();
+        });
+
+        document.getElementById('gallery-next').addEventListener('click', () => {
+            const newIndex = (currentImageIndex + 1) % totalImages;
+            showImage(newIndex);
+            thumbPage = Math.floor(newIndex / thumbsPerPage);
+            renderThumbs();
+        });
+
+        // Thumbnail arrow navigation
+        document.getElementById('thumb-prev').addEventListener('click', () => {
+            if (thumbPage > 0) {
+                thumbPage--;
+                renderThumbs();
+            }
+        });
+
+        document.getElementById('thumb-next').addEventListener('click', () => {
+            if (thumbPage < totalThumbPages - 1) {
+                thumbPage++;
+                renderThumbs();
+            }
+        });
+
+        // Initial render
+        updateCounter();
+        renderThumbs();
+
+        // Hide thumb arrows if only 1 page
+        if (totalThumbPages <= 1) {
+            const prevThumb = document.getElementById('thumb-prev');
+            const nextThumb = document.getElementById('thumb-next');
+            if (prevThumb) prevThumb.style.display = 'none';
+            if (nextThumb) nextThumb.style.display = 'none';
+        }
+
+        // Hide entire thumb section if only 1 image
+        if (totalImages <= 1) {
+            const wrapper = document.querySelector('.detail-thumbs-wrapper');
+            if (wrapper) wrapper.style.display = 'none';
+        }
+
+        // ── Populate car details info section ──
+        const brandEl = document.getElementById('detail-brand');
+        const modelEl = document.getElementById('detail-model');
+        const yearEl = document.getElementById('detail-year');
+        const colorEl = document.getElementById('detail-color');
+        const fuelTypeEl = document.getElementById('detail-fuel-type');
+
+        if (brandEl) brandEl.textContent = car.brand || 'Khác';
+        if (modelEl) modelEl.textContent = car.model || '—';
+        if (yearEl) yearEl.textContent = car.year || '—';
+        if (colorEl) colorEl.textContent = car.color || '—';
+        if (fuelTypeEl) fuelTypeEl.textContent = car.fuel_type || 'Xăng';
+
+        // ── Populate features ──
+        const featuresEl = document.getElementById('detail-features');
+        if (featuresEl) {
+            const features = car.features 
+                ? car.features.split(',').map(f => f.trim()).filter(f => f.length > 0)
+                : ['Điều hòa', 'Camera lùi', 'Cảm biến đỗ xe', 'Bluetooth', 'Ghế da'];
+
+            featuresEl.innerHTML = features.map(f => `
+                <div class="feature-item">
+                    <svg class="feature-check" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <span>${f}</span>
                 </div>
             `).join('');
         }
 
-        const bookBtn = document.getElementById('book-btn');
-        bookBtn.href = `booking.html?carId=${car.id}&name=${encodeURIComponent(car.name)}`;
 
         // Load similar cars (exclude current)
         const similarGrid = document.getElementById('similar-grid');

@@ -114,7 +114,7 @@ nav a.active {
   display: flex;
   align-items: center;
   padding: 0 5%;
-  background: url('https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80') center/cover no-repeat;
+  background: url('../assets/images/backdrop/backdrop.jpg') center/cover no-repeat;
 }
 
 .hero::before {
@@ -603,6 +603,42 @@ footer {
   opacity: 0.9;
 }
 
+.pricing-notice {
+  background: var(--white);
+  padding: 2rem 5%;
+  text-align: center;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.pricing-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.pricing-range {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.pricing-tip {
+  color: var(--text-gray);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .pricing-range {
+    font-size: 1.25rem;
+  }
+  .pricing-tip {
+    font-size: 1rem;
+  }
+}
+
+
 .cars-layout {
   display: flex;
   padding: 3rem 5%;
@@ -755,6 +791,7 @@ footer {
   margin-bottom: 1rem;
   aspect-ratio: 4/3;
   background: #e5e7eb;
+  position: relative;
 }
 
 .detail-main-img img {
@@ -762,12 +799,129 @@ footer {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: opacity 0.3s ease;
+}
+
+/* ── Gallery Navigation Arrows ── */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+}
+
+.detail-main-img:hover .gallery-arrow {
+  opacity: 1;
+}
+
+.gallery-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-arrow svg {
+  width: 20px;
+  height: 20px;
+  color: var(--text-dark);
+}
+
+.gallery-arrow-left {
+  left: 12px;
+}
+
+.gallery-arrow-right {
+  right: 12px;
+}
+
+/* ── Image Counter ── */
+.gallery-counter {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  color: white;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  z-index: 5;
+}
+
+/* ── Thumbnails Wrapper with Arrows ── */
+.detail-thumbs-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.thumb-arrow {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.thumb-arrow:hover {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.thumb-arrow:hover svg {
+  color: white;
+}
+
+.thumb-arrow svg {
+  width: 16px;
+  height: 16px;
+  color: var(--text-gray);
+  transition: color 0.25s;
+}
+
+.thumb-arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.thumb-arrow:disabled:hover {
+  background: var(--white);
+  border-color: #e5e7eb;
+}
+
+.thumb-arrow:disabled:hover svg {
+  color: var(--text-gray);
 }
 
 .detail-thumbs {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
+  flex: 1;
+  overflow: hidden;
 }
 
 .detail-thumb {
@@ -799,6 +953,7 @@ footer {
 .detail-info-panel {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
 .detail-car-name {
@@ -811,8 +966,8 @@ footer {
 
 .detail-car-desc {
   color: var(--text-gray);
-  font-size: 1.05rem;
-  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
   line-height: 1.7;
 }
 
@@ -829,7 +984,7 @@ footer {
   font-size: 2.2rem;
   font-weight: 800;
   color: var(--text-dark);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: baseline;
   gap: 0.5rem;
@@ -938,23 +1093,85 @@ footer {
   background: #005ce6;
 }
 
-.detail-btn-whatsapp {
-  background: var(--primary-color);
-  color: white;
-}
-
-.detail-btn-whatsapp:hover {
-  background: var(--primary-hover);
-}
-
-.detail-btn-outline {
+/* ── Car Details Extra Info (Thông tin xe + Tiện ích + Mô tả) ── */
+.detail-extra-info {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
   background: var(--white);
-  border: 1.5px solid var(--text-dark);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.detail-info-section {
+  padding: 1.75rem;
+}
+
+.detail-info-section:first-child {
+  border-right: 1px solid #e5e7eb;
+}
+
+
+
+/* Thông tin xe rows */
+.detail-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.detail-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0;
+}
+
+.detail-info-row .info-label {
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+.detail-info-row .info-value {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+/* Tiện ích (features) list */
+.detail-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.9rem;
   color: var(--text-dark);
 }
 
-.detail-btn-outline:hover {
-  background: var(--bg-light);
+.feature-check {
+  width: 20px;
+  height: 20px;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+
+
+.detail-full-desc {
+  color: var(--text-gray);
+  font-size: 0.92rem;
+  line-height: 1.8;
+  margin: 0;
 }
 
 /* Similar Cars */
@@ -1058,6 +1275,15 @@ footer {
     position: static;
   }
 
+  .detail-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-info-section:first-child {
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
   .similar-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
@@ -1087,6 +1313,22 @@ footer {
   .detail-card {
     padding: 1.25rem;
   }
+
+  .gallery-arrow {
+    opacity: 1;
+    width: 36px;
+    height: 36px;
+  }
+
+  .gallery-arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .detail-info-section {
+    padding: 1.25rem;
+  }
+
 }
 
 /* Contact Page Layout */
