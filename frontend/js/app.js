@@ -103,6 +103,7 @@ async function initDetail() {
             ? parseFloat(car.price_per_day).toLocaleString('vi-VN')
             : car.price_per_day;
         document.getElementById('detail-price').innerHTML = `${formattedPrice}₫ <span>/ngày</span>`;
+        document.getElementById('detail-name').textContent = car.name;
 
         document.getElementById('detail-seats').textContent = `${car.seats} chỗ`;
         document.getElementById('detail-transmission').textContent = car.transmission;
