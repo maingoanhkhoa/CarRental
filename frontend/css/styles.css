@@ -114,7 +114,7 @@ nav a.active {
   display: flex;
   align-items: center;
   padding: 0 5%;
-  background: url('../assets/images/backdrop/backdrop.jpg') center/cover no-repeat;
+  background: url('../assets/images/backdrop/backdrop1.jpg') center/cover no-repeat;
 }
 
 .hero::before {
@@ -253,7 +253,6 @@ nav a.active {
 }
 
 .price {
-  font-size: 1.4rem;
   font-weight: 800;
   color: var(--text-dark);
 }
@@ -981,7 +980,7 @@ footer {
 }
 
 .detail-price-display {
-  font-size: 2.2rem;
+  font-size: 1.9 rem;
   font-weight: 800;
   color: var(--text-dark);
   margin-bottom: 1rem;

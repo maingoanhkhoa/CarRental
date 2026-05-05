@@ -1,11 +1,6 @@
-/**
- * reviews.js — Frontend logic for the reviews page
- * Handles: loading reviews, submitting reviews, star rating, UX states
- */
+const API_BASE = `${API_URL}/reviews`;
 
-const API_BASE = 'http://localhost:5000/api/reviews';
-
-// ── Star Rating ──────────────────────────────────────────────
+// Star Rating
 const starBtns = document.querySelectorAll('.star-btn');
 const ratingInput = document.getElementById('review-rating');
 
@@ -32,7 +27,7 @@ document.getElementById('star-rating').addEventListener('mouseleave', () => {
   starBtns.forEach(b => b.classList.remove('hover'));
 });
 
-// ── Render Reviews ───────────────────────────────────────────
+// Render Reviews
 function renderStars(rating) {
   const r = Math.min(5, Math.max(1, parseInt(rating) || 5));
   return Array.from({ length: 5 }, (_, i) =>

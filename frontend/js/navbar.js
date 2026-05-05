@@ -1,7 +1,3 @@
-/**
- * navbar.js — Hamburger mobile nav toggle
- * Hoạt động trên tất cả các trang có header.
- */
 document.addEventListener('DOMContentLoaded', function () {
   var hamburger = document.getElementById('hamburger-btn');
   var mobileNav = document.getElementById('mobile-nav');

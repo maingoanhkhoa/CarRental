@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initDetail();
     } else if (path.includes('booking.html')) {
         initBooking();
+    } else if (path.includes('reviews.html')) {
+        initReview();
     }
 });
 
@@ -36,9 +38,9 @@ async function initCars() {
             // Lấy danh sách qua api, truyền theo tham số API hiện tại (seats)
             const apiParams = {};
             if (params.seats) apiParams.seats = params.seats;
-            
+
             const cars = await api.getCars(apiParams);
-            
+
             // Xử lý lọc theo khoảng giá ở Frontend (do backend cơ bản chưa có lọc min/max price)
             let filteredCars = cars;
             if (params.priceRange) {
@@ -66,7 +68,7 @@ async function initCars() {
         filterForm.addEventListener('change', () => {
             const selectedSeat = filterForm.querySelector('input[name="seats"]:checked')?.value || '';
             // const priceRange = document.getElementById('price-dropdown')?.value || ''; //price filter
-            
+
             loadCars({ seats: selectedSeat });
         });
     }
@@ -86,7 +88,7 @@ async function initDetail() {
         const car = await api.getCarDetails(carId);
         const loadingEl = document.getElementById('loading');
         const contentEl = document.getElementById('detail-content');
-        
+
         if (loadingEl) loadingEl.classList.add('d-none');
         if (contentEl) contentEl.classList.remove('d-none');
 
@@ -238,7 +240,7 @@ async function initDetail() {
         // ── Populate features ──
         const featuresEl = document.getElementById('detail-features');
         if (featuresEl) {
-            const features = car.features 
+            const features = car.features
                 ? car.features.split(',').map(f => f.trim()).filter(f => f.length > 0)
                 : ['Điều hòa', 'Camera lùi', 'Cảm biến đỗ xe', 'Bluetooth', 'Ghế da'];
 
@@ -294,7 +296,7 @@ function initBooking() {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         let messageVal = '';
         const msgInput = document.getElementById('message');
         if (msgInput) messageVal = msgInput.value;
