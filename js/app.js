@@ -1,15 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname;
 
-    if (path.endsWith('index.html') || path === '/' || path.endsWith('/') || path.includes('/index.html')) {
+    // Support both local (with .html) and Cloudflare Pages (without .html)
+    if (path.endsWith('index.html') || path === '/' || path.endsWith('/') || path.endsWith('/index')) {
         initHome();
-    } else if (path.includes('cars.html')) {
+    } else if (path.includes('cars.html') || path.endsWith('/cars')) {
         initCars();
-    } else if (path.includes('detail.html')) {
+    } else if (path.includes('detail.html') || path.endsWith('/detail')) {
         initDetail();
-    } else if (path.includes('booking.html')) {
+    } else if (path.includes('booking.html') || path.endsWith('/booking')) {
         initBooking();
-    } else if (path.includes('reviews.html')) {
+    } else if (path.includes('reviews.html') || path.endsWith('/reviews')) {
         if (typeof initReview === 'function') {
             initReview();
         }
