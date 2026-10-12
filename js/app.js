@@ -58,6 +58,13 @@ async function initCars() {
                 });
             }
 
+            // Đẩy Ford Ranger xuống cuối danh sách
+            filteredCars.sort((a, b) => {
+                const aIsRanger = a.name.toLowerCase().includes('ranger') ? 1 : 0;
+                const bIsRanger = b.name.toLowerCase().includes('ranger') ? 1 : 0;
+                return aIsRanger - bIsRanger;
+            });
+
             if (filteredCars.length === 0) {
                 grid.innerHTML = '<p class="text-center" style="grid-column: 1/-1;">Không tìm thấy xe nào phù hợp.</p>';
                 return;
