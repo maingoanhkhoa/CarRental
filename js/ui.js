@@ -29,10 +29,15 @@ window.ui = {
 
     createCarCard(car) {
         const imageUrl = car.image_url || 'https://via.placeholder.com/600x400';
-        // Parse price appropriately
-        const formattedPrice = parseFloat(car.price_per_day) > 1000 ?
-            parseFloat(car.price_per_day).toLocaleString('vi-VN') :
-            car.price_per_day;
+        // Parse price appropriately (support range like "1700000 - 1800000 - 1900000")
+        const formattedPrice = String(car.price_per_day).includes(' - ')
+            ? car.price_per_day.split(' - ').map(p => {
+                const n = parseFloat(p.trim());
+                return n > 1000 ? n.toLocaleString('vi-VN') : p.trim();
+            }).join(' - ')
+            : (parseFloat(car.price_per_day) > 1000
+                ? parseFloat(car.price_per_day).toLocaleString('vi-VN')
+                : car.price_per_day);
 
         return `
             <div class="car-card">

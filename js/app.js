@@ -111,9 +111,14 @@ async function initDetail() {
         // Update page title
         document.title = `${car.name} - Vũ Đầm Sen`;
 
-        const formattedPrice = parseFloat(car.price_per_day) > 1000
-            ? parseFloat(car.price_per_day).toLocaleString('vi-VN')
-            : car.price_per_day;
+        const formattedPrice = String(car.price_per_day).includes(' - ')
+            ? car.price_per_day.split(' - ').map(p => {
+                const n = parseFloat(p.trim());
+                return n > 1000 ? n.toLocaleString('vi-VN') : p.trim();
+            }).join(' - ')
+            : (parseFloat(car.price_per_day) > 1000
+                ? parseFloat(car.price_per_day).toLocaleString('vi-VN')
+                : car.price_per_day);
         document.getElementById('detail-price').innerHTML = `${formattedPrice}₫ <span>/ngày</span>`;
         document.getElementById('detail-name').textContent = car.name;
 
@@ -287,9 +292,14 @@ async function initDetail() {
             if (similar.length > 0) {
                 similarGrid.innerHTML = similar.map(c => {
                     const img = c.image_url || 'https://via.placeholder.com/600x400?text=Car';
-                    const price = parseFloat(c.price_per_day) > 1000
-                        ? parseFloat(c.price_per_day).toLocaleString('vi-VN')
-                        : c.price_per_day;
+                    const price = String(c.price_per_day).includes(' - ')
+                        ? c.price_per_day.split(' - ').map(p => {
+                            const n = parseFloat(p.trim());
+                            return n > 1000 ? n.toLocaleString('vi-VN') : p.trim();
+                        }).join(' - ')
+                        : (parseFloat(c.price_per_day) > 1000
+                            ? parseFloat(c.price_per_day).toLocaleString('vi-VN')
+                            : c.price_per_day);
                     return `
                         <div class="similar-card">
                             <img src="${img}" alt="${c.name}" crossorigin="anonymous">

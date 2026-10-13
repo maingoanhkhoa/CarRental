@@ -44,7 +44,7 @@
   {
     "id": 21,
     "name": "Kia Carnival signature",
-    "price_per_day": "900000.00",
+    "price_per_day": "1700000.00 - 1800000.00 - 1900000.00",
     "seats": 7,
     "transmission": "Số Tự Động",
     "fuel_type": "Dầu",
@@ -338,7 +338,7 @@
   {
     "id": 13,
     "name": "Honda City",
-    "price_per_day": "800000.00",
+    "price_per_day": "600000.00 - 700000.00",
     "seats": 5,
     "transmission": "Số Tự Động",
     "fuel_type": "Xăng",
@@ -476,7 +476,7 @@
   {
     "id": 8,
     "name": "Honda City",
-    "price_per_day": "700000.00",
+    "price_per_day": "600000.00 - 700000.00",
     "seats": 5,
     "transmission": "Số Tự Động",
     "fuel_type": "Xăng",
