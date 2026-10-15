@@ -1,5 +1,37 @@
 window.CARS = [
   {
+    "id": 24,
+    "name": "Honda City",
+    "price_per_day": "600000.00 - 700000.00",
+    "seats": 5,
+    "transmission": "Số Tự Động",
+    "fuel_type": "Xăng",
+    "image_url": "assets/images/honda_city_red/hondacity-01.jpg",
+    "description": "Thiết kế thể thao hiện đại, và được đánh giá là lựa chọn hàng đầu phân khúc với nhiều công nghệ an toàn, tiện nghi.",
+    "brand": "Honda",
+    "model": "City",
+    "year": null,
+    "color": "Đỏ",
+    "features": null,
+    "images": [
+      {
+        "id": 66,
+        "image_url": "assets/images/honda_city_red/hondacity-02.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 67,
+        "image_url": "assets/images/honda_city_red/hondacity-03.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 68,
+        "image_url": "assets/images/honda_city_red/hondacity-04.jpg",
+        "sort_order": 0
+      }
+    ]
+  },
+  {
     "id": 23,
     "name": "Mazda 3",
     "price_per_day": "800000.00",
@@ -7,7 +39,7 @@ window.CARS = [
     "transmission": "Số Tự Động",
     "fuel_type": "Xăng",
     "image_url": "assets/images/mazda3/mazda3-01.jpg",
-    "description": "Mẫu sedan cỡ C với thiết kế sang trọng, nội thất rộng rãi, tiện nghi và trang bị an toàn đầy đủ",
+    "description": "Mẫu sedan cỡ C với thiết kế sang trọng, nội thất rộng rãi, tiện nghi và trang bị an toàn đầy đủ.",
     "brand": "Mazda",
     "model": "Mazda 3",
     "year": null,
