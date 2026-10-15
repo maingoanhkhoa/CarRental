@@ -41,7 +41,7 @@ window.ui = {
 
         return `
             <div class="car-card">
-                <img src="${imageUrl}" alt="${car.name}" class="car-img" crossorigin="anonymous">
+                <img src="${imageUrl}" alt="${car.name}" class="car-img">
                 <div class="car-info">
                     <h3>${car.name}</h3>
                     <div class="car-meta">

@@ -176,7 +176,7 @@ async function initDetail() {
                 const globalIndex = start + i;
                 return `
                     <div class="detail-thumb ${globalIndex === currentImageIndex ? 'active' : ''}" data-index="${globalIndex}">
-                        <img src="${src}" alt="thumbnail ${globalIndex + 1}" crossorigin="anonymous">
+                        <img src="${src}" alt="thumbnail ${globalIndex + 1}">
                     </div>
                 `;
             }).join('');
@@ -302,7 +302,7 @@ async function initDetail() {
                             : c.price_per_day);
                     return `
                         <div class="similar-card">
-                            <img src="${img}" alt="${c.name}" crossorigin="anonymous">
+                            <img src="${img}" alt="${c.name}">
                             <div class="similar-info">
                                 <h3>${c.name}</h3>
                                 <div class="similar-footer">
