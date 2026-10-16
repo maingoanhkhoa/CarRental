@@ -1,5 +1,95 @@
 window.CARS = [
   {
+    "id": 27,
+    "name": "Honda BR-V",
+    "price_per_day": "900000.00",
+    "seats": 7,
+    "transmission": "Số Tự Động",
+    "fuel_type": "Xăng",
+    "image_url": "assets/images/honda_brv/honda-brv-01.jpg",
+    "description": "Honda BR-V là dòng MPV 7 chỗ đa dụng, nổi bật với thiết kế thể thao, khoang nội thất rộng rãi và công nghệ an toàn Honda SENSING.",
+    "brand": "Honda",
+    "model": "BR-V",
+    "year": null,
+    "color": "Trắng",
+    "features": null,
+    "images": []
+  },
+  {
+    "id": 26,
+    "name": "Toyota Fortuner",
+    "price_per_day": "1000000.00",
+    "seats": 7,
+    "transmission": "Số Tự Động",
+    "fuel_type": "Xăng",
+    "image_url": "assets/images/fortuner/fortuner-01.jpg",
+    "description": "Toyota Fortuner là dòng SUV 7 chỗ với thiết kế mạnh mẽ, nội thất rộng rãi và đa dụng thể thao.",
+    "brand": "Toyota",
+    "model": "Fortuner",
+    "year": null,
+    "color": "Trắng",
+    "features": null,
+    "images": [
+      {
+        "id": 66,
+        "image_url": "assets/images/fortuner/fortuner-02.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 67,
+        "image_url": "assets/images/fortuner/fortuner-03.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 68,
+        "image_url": "assets/images/fortuner/fortuner-04.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 69,
+        "image_url": "assets/images/fortuner/fortuner-05.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 70,
+        "image_url": "assets/images/fortuner/fortuner-06.jpg",
+        "sort_order": 0
+      },
+    ] 
+  },
+  {
+    "id": 25,
+    "name": "MG ZS",
+    "price_per_day": "800000.00",
+    "seats": 5,
+    "transmission": "Số Tự Động",
+    "fuel_type": "Xăng",
+    "image_url": "assets/images/MG_ZS/MG-01.jpg",
+    "description": "MG ZS là dòng SUV đô thị compact với thiết kế hiện đại, nội thất rộng rãi và trang bị tiện nghi đầy đủ.",
+    "brand": "MG",
+    "model": "ZS",
+    "year": null,
+    "color": "Đen",
+    "features": null,
+    "images": [
+      {
+        "id": 66,
+        "image_url": "assets/images/MG_ZS/MG-02.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 67,
+        "image_url": "assets/images/MG_ZS/MG-03.jpg",
+        "sort_order": 0
+      },
+      {
+        "id": 68,
+        "image_url": "assets/images/MG_ZS/MG-04.jpg",
+        "sort_order": 0
+      },
+    ]
+  },
+  {
     "id": 24,
     "name": "Honda City",
     "price_per_day": "600000.00 - 700000.00",
